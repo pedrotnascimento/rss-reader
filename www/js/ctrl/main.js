@@ -27,9 +27,22 @@ angular.module('starter')
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
     Feeding.parseFeed(user_feeds[i]).then(function(res){
-        alert(res);
         $scope.feeds.push(Feed(res.data.responseData.feed));
-        });
+        }
+        
+        ,
+function(res) {
+    // everything in here rejected
+    alert(JSON.stringify(res));
+},
+function(res) {
+    // everything in here pending (with progress back)
+    alert(JSON.stringify(res));
+}  
+        
+        
+        
+        );
     }
   }
   loadFeeds();
@@ -47,6 +60,7 @@ angular.module('starter')
        
    };
    $interval(function(){
+       if(!scope.feeds)
             loadFeeds();           
             
    }, 4000, 3);
@@ -55,7 +69,9 @@ angular.module('starter')
 .factory('FeedService',['$http',function($http){
     return {
         parseFeed : function(url){
-        return $http.jsonp('//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+            var some = $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+            //TROQUEI  '//ajax.google...'  por 'https://ajax.google... e FUNCIONOU
+        return some;
 
             
         }
