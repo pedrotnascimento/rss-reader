@@ -1,7 +1,7 @@
 (function(){
 
 angular.module('starter')
-.controller('Main', ['$scope', 'FeedService',function($scope,  Feeding){
+.controller('Main', ['$scope', 'FeedService', '$interval',function($scope,  Feeding, $interval){
     $scope.feeds= [];
     url = "tes";
     $scope.test= "abc";
@@ -24,14 +24,17 @@ angular.module('starter')
       "http://g1.globo.com/dynamo/rss2.xml", "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
      
   ]; 
-  
-  for (var i = 0; i < user_feeds.length; i++){
-  Feeding.parseFeed(user_feeds[i]).then(function(res){
-      $scope.feeds.push(Feed(res.data.responseData.feed));
-    });
+  function loadFeeds(){
+    for (var i = 0; i < user_feeds.length; i++){
+    Feeding.parseFeed(user_feeds[i]).then(function(res){
+        alert(res);
+        $scope.feeds.push(Feed(res.data.responseData.feed));
+        });
+    }
   }
+  loadFeeds();
     //http://feeds2.feedburner.com/Mashable
-    //http://g1.globo.com/dynamo/rss2.xml
+    //http://g1.globo.com/dynamo/rss2.xmxl
    
    var last_feed_shown_inx = 0;  
    $scope.changeDisplay = function(index){
@@ -42,13 +45,19 @@ angular.module('starter')
        }
        $scope.feeds[index].show = !$scope.feeds[index].show;
        
-   } 
-    
+   };
+   $interval(function(){
+            loadFeeds();           
+            
+   }, 4000, 3);
+   
 }])//fim controller
 .factory('FeedService',['$http',function($http){
     return {
         parseFeed : function(url){
-            return $http.jsonp('//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+        return $http.jsonp('//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+
+            
         }
     }
 }]);
