@@ -24,10 +24,10 @@ angular.module('starter', ['ionic'])
 })
 .config(function($stateProvider,  $urlRouterProvider){
     $stateProvider
-    .state('index', {
-              url: '/index',
-              templateUrl: 'index.html',
+    .state('feeds', {
+              url: '/feeds',
+              templateUrl: 'templates/feeds.html',
               controller: 'Main'
             }); 
-    $urlRouterProvider.otherwise('/index');
+    $urlRouterProvider.otherwise('/feeds');//ESSA LINHA É NECESSARIA
 });
