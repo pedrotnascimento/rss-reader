@@ -76,7 +76,36 @@ angular.module('starter')
     });
 
     function filter(){
-        console.log("aaaaaaa agora vamos filtrar");
+        /*
+    criterias = []										// array which will have the words for each criteria
+	titleWords = split(' ', news.title)					// split the title news words
+	descriptionWords = split(' ', news.description)		// split the description news words
+	criterias.push(titleWords)
+	criterias.push(descriptionWords)
+	
+	foreach criteria in criterias 			
+		foreach word in criteria						// loop in the criterias for some criteria like title or description
+			if word in tags 							//if the word is the tags array
+				return true
+	return false
+
+        */
+        for(var i =0 ; i < $scope.feeds.length; i++)
+            for(var j =0; j< $scope.feeds[i].entries.length; j++)
+                evaluateNews($scope.feeds[i].entries[j]);
+        
+        function evaluateNews(news){
+            var bagOfWords = news.categories + ",";
+            var bagOfWords = bagOfWords + news.title.split(' ') + ","   ;
+            var bagOfWords = bagOfWords + news.contentSnippet.split(' ');
+            
+            for(var i in $tags.tags){
+                for(var j in $tags.tags[i]) 
+                    if(bagOfWords.search(j) != -1)
+                        console.log("achou");
+            }
+
+        }
     }
 
    }])
