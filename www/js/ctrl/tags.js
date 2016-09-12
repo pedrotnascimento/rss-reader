@@ -1,6 +1,6 @@
 (function(){
 angular.module('starter')
-.controller('Tags', function($scope, $http){
+.controller('Tags', function($scope, $http, $tags){
     $scope.test="abc";
 
     $http.get('js/ctrl/localData/interests.txt').then(
@@ -25,6 +25,15 @@ angular.module('starter')
        $scope.interestsGroups[index].show = !$scope.interestsGroups[index].show;
        
    };
+
+   $scope.addInterest = function(interest, category){
+       if( undefined == $tags.tags[category])
+            $tags.tags[category] = {};
+        if(undefined == $tags.tags[category][interest])    
+            $tags.tags[category][interest] = interest;
+        else
+            delete $tags.tags[category][interest];
+   }
     
 });//fim controller
 })();//fim do arquivo 

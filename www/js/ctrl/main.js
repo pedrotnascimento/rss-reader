@@ -1,7 +1,8 @@
 (function(){
 
 angular.module('starter')
-.controller('Main', ['$scope', 'FeedService', '$interval', '$state',function($scope,  Feeding, $interval, $state){
+.controller('Main', ['$scope', 'FeedService', '$interval', '$state', '$tags', '$rootScope',
+            function($scope,  Feeding, $interval, $state, $tags, $rootScope){
     
 
     $scope.feeds= [];
@@ -24,7 +25,6 @@ angular.module('starter')
     }
   var user_feeds =[
       "http://g1.globo.com/dynamo/rss2.xml", "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
-     
   ]; 
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
@@ -64,9 +64,20 @@ angular.module('starter')
    }, 4000, 3);
 
    $scope.go = function (state) {
-       console.log("heasf");
        $state.go(state);
    }
+
+   $rootScope.$on('$stateChangeStart', 
+        function(event, toState, toParams, fromState, fromParams, options){
+            if(toState.name=="app.feeds" &&
+                fromState.name=="app.tags")
+                filter();
+
+    });
+
+    function filter(){
+        console.log("aaaaaaa agora vamos filtrar");
+    }
 
    }])
    .factory('FeedService',['$http',function($http){
