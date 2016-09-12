@@ -1,0 +1,14 @@
+<ion-view>
+    <ion-content>
+            <div ng-repeat="group  in interestsGroups" >
+                <div class="item item-divider" ng-click="changeDisplay($index)">
+                    {{group.category}}
+                </div>
+                <div class="list" ng-show="group.show"  ng-repeat="interest in group.entries">
+                    <ion-checkbox class="item list-item " >
+                            {{interest}}
+                    </ion-checkbox>
+                </div>
+            </div>
+    </ion-content>
+</ion-view> 

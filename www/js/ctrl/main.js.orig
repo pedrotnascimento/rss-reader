@@ -1,9 +1,12 @@
 (function(){
 
 angular.module('starter')
+<<<<<<< Updated upstream
+.controller('Main', function($scope){
+    $scope.test= "abasdasdasd c";
+});//fim controller
+=======
 .controller('Main', ['$scope', 'FeedService', '$interval', '$state',function($scope,  Feeding, $interval, $state){
-    
-
     $scope.feeds= [];
     url = "tes";
     $scope.test= "abc";
@@ -29,18 +32,21 @@ angular.module('starter')
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
     Feeding.parseFeed(user_feeds[i]).then(function(res){
-
         $scope.feeds.push(Feed(res.data.responseData.feed));
-        console.log($scope.feeds);
-        },
-        function(res) {
-            // everything in here rejected
-            alert(JSON.stringify(res));
-        },
-        function(res) {
-            // everything in here pending (with progress back)
-            alert(JSON.stringify(res));
-        }  
+        }
+        
+        ,
+function(res) {
+    // everything in here rejected
+    alert(JSON.stringify(res));
+},
+function(res) {
+    // everything in here pending (with progress back)
+    alert(JSON.stringify(res));
+}  
+        
+        
+        
         );
     }
   }
@@ -60,7 +66,8 @@ angular.module('starter')
    };
    $interval(function(){
        if(!$scope.feeds)
-            loadFeeds();
+            loadFeeds();           
+            
    }, 4000, 3);
 
    $scope.go = function (state) {
@@ -68,8 +75,8 @@ angular.module('starter')
        $state.go(state);
    }
 
-   }])
-   .factory('FeedService',['$http',function($http){
+}])//fim controller
+.factory('FeedService',['$http',function($http){
     return {
         parseFeed : function(url){
             var some = $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
@@ -79,5 +86,7 @@ angular.module('starter')
             
         }
     }
+   
 }]);
+>>>>>>> Stashed changes
 })();

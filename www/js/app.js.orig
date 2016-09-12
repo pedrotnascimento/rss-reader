@@ -24,29 +24,38 @@ angular.module('starter', ['ionic'])
 })
 .config(function($stateProvider,  $urlRouterProvider){
     $stateProvider
-    .state('app', {
-      url: '/app',
-      abstract: true,
-      templateUrl: 'templates/menu.html'
-    })
-    .state('app.feeds', {
-      url: '/feeds',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/feeds.html',
-          controller: 'Main'
-        }
-      }
-    })
-    .state('app.tags', {
-      url: '/tags',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/tags.html',
-          controller: 'Tags'
-        }
-      }
-    });
+<<<<<<< Updated upstream
+    .state('index', {
+              url: '/index',
+              templateUrl: 'index.html',
+              controller: 'Main'
+            }); 
+    $urlRouterProvider.otherwise('/index');
+=======
+              .state('app', {
+              url: '/app',
+              abstract: true,
+              templateUrl: 'templates/menu.html'
+          })
 
-    $urlRouterProvider.otherwise('/app/feeds');
+    .state('app.feeds', {
+              url: '/feeds',
+              views:{
+                'menuContent':{
+                        templateUrl: 'templates/feeds.html',
+                        controller: 'Main'
+                }
+              }
+            })
+    .state('app.user', {
+      url: '/user',
+      views:{
+        'menuContent':{
+                templateUrl: 'templates/user.html',
+                controller: 'User'
+        }
+      }
+    }); 
+    $urlRouterProvider.otherwise('/feeds');//ESSA LINHA É NECESSARIA
+>>>>>>> Stashed changes
 });

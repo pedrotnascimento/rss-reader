@@ -1,0 +1,41 @@
+{
+"data":{
+        "0":{
+        "category":"Locais",
+        "entries":{
+                "1":"Rio de Janeiro",
+                "2":"São Paulo",
+                "3":"Amazonas",
+                "4":"Rio Grande do Sul"
+            }
+        }
+		,
+        "1":{
+        "category":"Policial",
+		"entries":{
+			"1":"arma",
+			"2":"assassino",
+			"3":"assassinato",
+			"6":"assassinado",
+			"7":"assassinada",
+			"4":"tiro",
+			"5":"bala perdida",
+			"8":"bandidos",
+			"9":"assalto"
+        }
+		},
+        "2":{
+        "category":"Política",
+		"entries":{
+			"1":"Dilma",
+			"2":"Temer",
+			"3":"Cunha",
+			"4":"Renan Calheiros",
+			"5":"Trump",
+			"6":"Bolsonaro",
+			"7":"Pedro Paulo",
+			"8":"Freixo"
+        }
+		}
+    }
+}
