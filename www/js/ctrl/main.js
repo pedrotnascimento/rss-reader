@@ -100,9 +100,12 @@ angular.module('starter')
             var bagOfWords = bagOfWords + news.contentSnippet.split(' ');
             
             for(var i in $tags.tags){
-                for(var j in $tags.tags[i]) 
-                    if(bagOfWords.search(j) != -1)
+                for(var j in $tags.tags[i]) {
+                    console.log($tags.tags[i][j]);
+                    if(bagOfWords.search($tags.tags[i][j]) != -1){
                         console.log("achou");
+                    }
+                }
             }
 
         }

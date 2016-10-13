@@ -6,7 +6,9 @@
                 "1":"Rio de Janeiro",
                 "2":"São Paulo",
                 "3":"Amazonas",
-                "4":"Rio Grande do Sul"
+                "4":"Rio Grande do Sul",
+				"5":"MG",
+				"6":"China"
             }
         }
 		,
