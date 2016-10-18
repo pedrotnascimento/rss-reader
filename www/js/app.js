@@ -46,6 +46,15 @@ angular.module('starter', ['ionic'])
           controller: 'Tags'
         }
       }
+    })
+    .state('app.saved', {
+      url: '/saved',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/saved.html',
+          controller: 'Saved'
+        }
+      }
     });
 
     $urlRouterProvider.otherwise('/app/feeds');

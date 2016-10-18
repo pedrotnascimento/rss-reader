@@ -1,0 +1,28 @@
+<ion-view>
+    <ion-content class="has-header">
+        <!-- <span ng-repeat="feedObj in feeds"  "> -->
+            <div ng-repeat="feed in feeds" >
+                <div class="item item-divider" ng-click="changeDisplay($index)">
+                    {{feed.title}}
+                </div>
+                <div class="row card" ng-show="feed.show" ng-repeat="news in feed.entries">
+                    <div class="col col-90 " >
+                        <div class="item item-stable item-text-wrap">
+                            {{news.title}}
+                        </div>
+                        <div class="item  item-text-wrap">        
+                            <small>{{news.contentSnippet}}</small>  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button class="button button-small button-positive ion-thumbsup" ></button>
+                        <button class="button button-small button-assertive ion-thumbsdown" ng-click="feed.entries.splice($index, 1)"></button>
+                    </div>
+                </div>
+            </div>
+            <!--
+            {{test}}
+            -->
+        <!-- </span> -->
+    </ion-content>
+</ion-view>
