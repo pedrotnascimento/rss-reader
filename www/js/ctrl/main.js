@@ -1,8 +1,8 @@
 (function(){
 
 angular.module('starter')
-.controller('Main', ['$scope', 'FeedService', '$interval', '$state', '$tags', '$rootScope',
-            function($scope,  Feeding, $interval, $state, $tags, $rootScope){
+.controller('Main', ['$scope', 'FeedService', '$interval', '$state', '$tags', '$rootScope', '$saved',
+                function($scope,  Feeding, $interval, $state, $tags, $rootScope, $saved){
     
 
     $scope.feeds= [];
@@ -109,6 +109,14 @@ angular.module('starter')
             }
 
         }
+    }
+
+    $scope.save = function(feed, index){
+        var news = feed.entries[index];
+        news.source = feed.title
+        var len = Object.keys($saved.saves).length;
+        $saved.saves[len] = news;
+        console.log(JSON.stringify($saved.saves));
     }
 
    }])

@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <button class="button button-small button-positive ion-thumbsup" ></button>
+                        <button class="button button-small button-positive ion-thumbsup" ng-click="save(feed, $index)"></button>
                         <button class="button button-small button-assertive ion-thumbsdown" ng-click="feed.entries.splice($index, 1)"></button>
                     </div>
                 </div>
