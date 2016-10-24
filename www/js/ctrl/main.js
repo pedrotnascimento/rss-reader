@@ -1,10 +1,10 @@
 (function(){
 
 angular.module('starter')
-.controller('Main', ['$scope', 'FeedService', '$interval', '$state', '$tags', '$rootScope', '$saved',
-                function($scope,  Feeding, $interval, $state, $tags, $rootScope, $saved){
+.controller('Main', 
+                function($scope,  FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage){
     
-
+    $localStorage.saving = "hey";
     $scope.feeds= [];
     url = "tes";
     $scope.test= "abc";
@@ -28,7 +28,7 @@ angular.module('starter')
   ]; 
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
-    Feeding.parseFeed(user_feeds[i]).then(function(res){
+    FeedService.parseFeed(user_feeds[i]).then(function(res){
 
         $scope.feeds.push(Feed(res.data.responseData.feed));
         console.log($scope.feeds);
@@ -119,7 +119,7 @@ angular.module('starter')
         console.log(JSON.stringify($saved.saves));
     }
 
-   }])
+   })
    .factory('FeedService',['$http',function($http){
     return {
         parseFeed : function(url){

@@ -6,3 +6,4 @@ platforms/
 plugins/
 *.orig
 resources/
+www/lib

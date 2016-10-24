@@ -1,8 +1,8 @@
 (function(){
 angular.module('starter')
-.controller('Tags', function($scope, $http, $tags){
+.controller('Tags', function($scope, $http, $tags, $localStorage){
     $scope.test="abc";
-
+    console.log($localStorage.saving);
     $http.get('js/ctrl/localData/interests.txt').then(
          function (data) {
              $scope.interestsGroups = data.data.data;
