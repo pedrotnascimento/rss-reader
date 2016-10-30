@@ -25,8 +25,14 @@ angular.module('starter')
         //console.log(JSON.stringify($localStorage.tags));
    }
 
+   this.load = function ( ){
+       return tags;
+   }
+
    this.isTagSaved = function(interest, category){
        return  !("undefined" == typeof tags[category] ||  "undefined" == typeof tags[category][interest]);
    }
+
+   
 
 });

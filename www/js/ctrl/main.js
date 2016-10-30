@@ -2,34 +2,41 @@
 
 angular.module('starter')
 .controller('Main', 
-                function($scope,  FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage){
-    
-    $localStorage.saving = "hey";
-    $scope.feeds= [];
+    function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage){
+    var feed_received = false;
+
+    $scope.feeds= [{
+        title:"Interessantes",
+        entries:[],
+        show: false
+    }];
     url = "tes";
     $scope.test= "abc";
     
+    //Feed constructor,
+    //title, name of the feed
+    //entries, news of the feed
+    //show, toggle view in accordion list 
     function Feed(feed) {
         var self = {};
-        /*
-        self[feed.title] = {};
-        self[feed.title].title = feed.title;
-        self[feed.title].entries = feed.entries;
-        self[feed.title].show = false;
-        */
         self = {};
         self.title = feed.title;
         self.entries = feed.entries;
         self.show = false;
         return self;
     }
+  
   var user_feeds =[
       "http://g1.globo.com/dynamo/rss2.xml", "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
   ]; 
+
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
     FeedService.parseFeed(user_feeds[i]).then(function(res){
+        feed_received = true;
         $scope.feeds.push(Feed(res.data.responseData.feed));
+        var feed_index = $scope.feeds.length-1;
+        filter($scope.feeds[feed_index]);   
         },
         function(res) {
             // everything in here rejected
@@ -48,7 +55,6 @@ angular.module('starter')
    
    var last_feed_shown_inx = 0;  
    $scope.changeDisplay = function(index){
-       
        if(last_feed_shown_inx!=index){
         $scope.feeds[last_feed_shown_inx].show = false;
         last_feed_shown_inx = index; 
@@ -56,58 +62,55 @@ angular.module('starter')
        $scope.feeds[index].show = !$scope.feeds[index].show;
        
    };
+
+   //if still dont have feed, reload feeds
    $interval(function(){
-       if(!$scope.feeds)
+       if(!feed_received)
             loadFeeds();
    }, 4000, 3);
 
+   //go to state(app screen)
    $scope.go = function (state) {
        $state.go(state);
    }
 
+   //refresh filter after added interests
    $rootScope.$on('$stateChangeStart', 
         function(event, toState, toParams, fromState, fromParams, options){
             if(toState.name=="app.feeds" &&
                 fromState.name=="app.tags")
-                filter();
-
+                for(var i =1; i < $scope.feeds.length-1; i++)
+                    filter($scope.feeds[i]);
     });
 
-    function filter(){
-        /*
-    criterias = []										// array which will have the words for each criteria
-	titleWords = split(' ', news.title)					// split the title news words
-	descriptionWords = split(' ', news.description)		// split the description news words
-	criterias.push(titleWords)
-	criterias.push(descriptionWords)
-	
-	foreach criteria in criterias 			
-		foreach word in criteria						// loop in the criterias for some criteria like title or description
-			if word in tags 							//if the word is the tags array
-				return true
-	return false
-
-        */
-        for(var i =0 ; i < $scope.feeds.length; i++)
-            for(var j =0; j< $scope.feeds[i].entries.length; j++)
-                evaluateNews($scope.feeds[i].entries[j]);
-        
+    //receives feeds and add interestings news(news with user tags inside) and put as interesting 
+    function filter(feeds){
+        var tags_loaded = $tags.load();
+        //console.log(tags_loaded);
+        //console.log(feeds);
+        for(var j =0; j< feeds.entries.length; j++)
+            evaluateNews(feeds.entries[j]);
+     
         function evaluateNews(news){
             var bagOfWords = news.categories + ",";
-            var bagOfWords = bagOfWords + news.title.split(' ') + ","   ;
+            var bagOfWords = bagOfWords + news.title.split(' ') + ",";
             var bagOfWords = bagOfWords + news.contentSnippet.split(' ');
-            
-            for(var i in $tags.tags){
-                for(var j in $tags.tags[i]) {
-                    console.log($tags.tags[i][j]);
-                    if(bagOfWords.search($tags.tags[i][j]) != -1){
-                        console.log("achou");
+            var bagOfWords = bagOfWords + news.content.split(' ');
+            // console.log(bagOfWords);
+
+            //FIX-ME: ou o código está duplicando noticias, ou noticias estao vindo duplicadas
+            for(var i in tags_loaded){
+                for(var j in tags_loaded[i]) {
+                    if(bagOfWords.search(tags_loaded[i][j].name) != -1
+                        && ! (news in $scope.feeds[0].entries)){
+                        //console.log("achou " + tags_loaded[i][j].name);
+                        //console.log(bagOfWords);
+                        $scope.feeds[0].entries.push(news);      
                     }
                 }
             }
-
         }
-    }
+    };
 
     $scope.save = function(feed, index){
         var news = feed.entries[index];
@@ -117,16 +120,16 @@ angular.module('starter')
         console.log(JSON.stringify($saved.saves));
     }
 
-   })
-   .factory('FeedService',['$http',function($http){
-    return {
-        parseFeed : function(url){
-            var some = $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
-            //TROQUEI  '//ajax.google...'  por 'https://ajax.google... e FUNCIONOU
-        return some;
+})
+.factory('FeedService',['$http',function($http){
+return {
+    parseFeed : function(url){
+        var feed = $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
+        //TROQUEI  '//ajax.google...'  por 'https://ajax.google... e FUNCIONOU
+    return feed;
 
-            
-        }
+        
     }
+}
 }]);
 })();
