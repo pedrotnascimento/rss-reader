@@ -3,40 +3,40 @@
         "0":{
         "category":"Locais",
         "entries":{
-                "1":"Rio de Janeiro",
-                "2":"São Paulo",
-                "3":"Amazonas",
-                "4":"Rio Grande do Sul",
-				"5":"MG",
-				"6":"China"
+                "1":{"name":"Rio de Janeiro", "marked":false},
+                "2":{"name":"São Paulo","marked":false},
+                "3":{"name":"Amazonas","marked":false},
+                "4":{"name":"Rio Grande do Sul","marked":false},
+				"5":{"name":"MG","marked":false},
+				"6":{"name":"China","marked":false}
             }
         }
 		,
         "1":{
         "category":"Policial",
 		"entries":{
-			"1":"arma",
-			"2":"assassino",
-			"3":"assassinato",
-			"6":"assassinado",
-			"7":"assassinada",
-			"4":"tiro",
-			"5":"bala perdida",
-			"8":"bandidos",
-			"9":"assalto"
+			"1":{"name":"arma","marked":false},
+			"2":{"name":"assassino","marked":false},
+			"3":{"name":"assassinato","marked":false},
+			"6":{"name":"assassinado","marked":false},
+			"7":{"name":"assassinada","marked":false},
+			"4":{"name":"tiro","marked":false},
+			"5":{"name":"bala perdida","marked":false},
+			"8":{"name":"bandidos","marked":false},
+			"9":{"name":"assalto","marked":false}
         }
 		},
         "2":{
         "category":"Política",
 		"entries":{
-			"1":"Dilma",
-			"2":"Temer",
-			"3":"Cunha",
-			"4":"Renan Calheiros",
-			"5":"Trump",
-			"6":"Bolsonaro",
-			"7":"Pedro Paulo",
-			"8":"Freixo"
+			"1":{"name":"Dilma","marked":false},
+			"2":{"name":"Temer","marked":false},
+			"3":{"name":"Cunha","marked":false},
+			"4":{"name":"Renan Calheiros","marked":false},
+			"5":{"name":"Trump","marked":false},
+			"6":{"name":"Bolsonaro","marked":false},
+			"7":{"name":"Pedro Paulo","marked":false},
+			"8":{"name":"Freixo","marked":false}
         }
 		}
     }

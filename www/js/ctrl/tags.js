@@ -1,39 +1,35 @@
 (function(){
 angular.module('starter')
-.controller('Tags', function($scope, $http, $tags, $localStorage){
-    $scope.test="abc";
-    console.log($localStorage.saving);
+.controller('Tags', function($scope, $http, $tags){
+    //$scope.test="abc";
     $http.get('js/ctrl/localData/interests.txt').then(
          function (data) {
              $scope.interestsGroups = data.data.data;
-             for (var i in $scope.interestsGroups)
+             for (var i in $scope.interestsGroups){
                     $scope.interestsGroups[i].show = false;
-             console.log($scope.interestsGroups);
-    },
+                    //console.log($scope.interestsGroups[i]);
+                    for(var j in $scope.interestsGroups[i].entries){
+                            var foo = $tags.isTagSaved($scope.interestsGroups[i].entries[j].name, $scope.interestsGroups[i].category);
+                            //console.log($scope.interestsGroups[i][j][k]); 
+                            $scope.interestsGroups[i].entries[j].marked = foo;
+                    }
+             }
+        },
         function(res){
             console.log(res);
-    }
+        }
     );
 
     var last_feed_shown_inx = 0;  
    $scope.changeDisplay = function(index){
-       
        if(last_feed_shown_inx!=index){
-        $scope.interestsGroups[last_feed_shown_inx].show = false;
-        last_feed_shown_inx = index; 
+            $scope.interestsGroups[last_feed_shown_inx].show = false;
+            last_feed_shown_inx = index; 
        }
        $scope.interestsGroups[index].show = !$scope.interestsGroups[index].show;
-       
    };
 
-   $scope.addInterest = function(interest, category){
-       if( undefined == $tags.tags[category])
-            $tags.tags[category] = {};
-        if(undefined == $tags.tags[category][interest])    
-            $tags.tags[category][interest] = interest;
-        else
-            delete $tags.tags[category][interest];
-   }
+   $scope.addInterest = $tags.add;
     
 });//fim controller
 })();//fim do arquivo 

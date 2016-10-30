@@ -29,9 +29,7 @@ angular.module('starter')
   function loadFeeds(){
     for (var i = 0; i < user_feeds.length; i++){
     FeedService.parseFeed(user_feeds[i]).then(function(res){
-
         $scope.feeds.push(Feed(res.data.responseData.feed));
-        console.log($scope.feeds);
         },
         function(res) {
             // everything in here rejected
