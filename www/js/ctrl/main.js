@@ -2,7 +2,8 @@
 
 angular.module('starter')
 .controller('Main', 
-    function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage, $cordovaSocialSharing){
+    function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage, $cordovaSocialSharing,
+                $ionicPopup){
     var feed_received = false;
 
     $scope.feeds= [{
@@ -126,21 +127,37 @@ angular.module('starter')
         var news = feed.entries[index];
         news.source = feed.title
         $saved.save(news);
-        console.log(JSON.stringify(news));
+        $scope.share(news);
     }
 
-    $scope.shareWapp = function (news){
-    var message = news.contentSnippet;
-    console.log(news);
-    return ;
-     $cordovaSocialSharing.shareViaWhatsApp(message, image, link)
-            .then(function(result) {
-            console.log(result);
-            }, function(err) {
-            // An error occurred. Show a message to the user
-            console.log(err);
-            });
+    $scope.share = function (news){
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Compartilhar no Whatsapp?',
+            template: 'Toque OK para compartilhar'
+        });
+
+        confirmPopup.then(function(res) {
+            if(res) {
+                send(news);
+            } else {
+            console.log('You are not sure');
+            }
+        });
+        function send(news){
+            var message = news.contentSnippet;
+            var image = null;
+            var link = news.link;
+            $cordovaSocialSharing.shareViaWhatsApp(message, image, link)
+                .then(function(result) {
+                console.log(result);
+                }, function(err) {
+                // An error occurred. Show a message to the user
+                console.log(err);
+                });
+        }
     }
+
+
 
 })
 .factory('FeedService',['$http',function($http){
@@ -149,8 +166,6 @@ return {
         var feed = $http.jsonp('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
         //TROQUEI  '//ajax.google...'  por 'https://ajax.google... e FUNCIONOU
     return feed;
-
-        
     }
 }
 }]);
