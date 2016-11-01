@@ -10,8 +10,11 @@ angular.module('starter')
 
     this.save = function(news){
         var len = Object.keys(saves).length;
-        if(! (news in saves))
-            saves[len] = news;
+        for(var i in saves){
+            if(JSON.stringify(saves[i]) == JSON.stringify(news))
+                return false;  
+        }
+        saves[len] = news;
     }
 
     this.load = function(){

@@ -161,8 +161,6 @@ angular.module('starter')
         window.open(news.link, '_self')
     }
 
-
-
 })
 .factory('FeedService',['$http',function($http){
 return {

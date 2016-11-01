@@ -3,13 +3,17 @@
         <!-- <span ng-repeat="feedObj in feeds"  "> -->
 
                 <div class="row card"  ng-repeat="news in saves">
-                    <div class="col col-90 " >
+                    <div class="col col-90 "  ng-click="goNews(news)">
                         <div class="item item-stable item-text-wrap">
                             {{news.title}}
                         </div>
                         <div class="item  item-text-wrap">        
                             <small>{{news.contentSnippet}}</small>  
                         </div>
+                    </div>
+                    <div class="col">
+                        <button class="button button-small button-positive ion-social-whatsapp" ng-click="share(feed, $index)"></button>
+                        <button class="button button-small button-assertive ion-trash-b" ng-click="deleteNews(news)"></button>
                     </div>
                 </div>
 
