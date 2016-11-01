@@ -1,8 +1,8 @@
 angular.module('starter')
 .service('$saved', function($localStorage){
-    if(undefined == $localStorage.saved_news){
+    if("undefined" == typeof $localStorage.saved_news){
         var saves = {};
-        $localStorage.saved_news = this.saves;
+        $localStorage.saved_news = saves;
     } 
     else{
         var saves = $localStorage.saved_news;
