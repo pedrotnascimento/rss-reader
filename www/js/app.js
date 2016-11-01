@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','ngStorage'])
+angular.module('starter', ['ionic','ngStorage','ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $localStorage) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,6 +20,8 @@ angular.module('starter', ['ionic','ngStorage'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
+    //$localStorage.$reset();//reset
   });
 })
 .config(function($stateProvider,  $urlRouterProvider){

@@ -27,17 +27,25 @@
         }
 		},
         "2":{
-        "category":"Política",
-		"entries":{
-			"1":{"name":"Dilma","marked":false},
-			"2":{"name":"Temer","marked":false},
-			"3":{"name":"Cunha","marked":false},
-			"4":{"name":"Renan Calheiros","marked":false},
-			"5":{"name":"Trump","marked":false},
-			"6":{"name":"Bolsonaro","marked":false},
-			"7":{"name":"Pedro Paulo","marked":false},
-			"8":{"name":"Freixo","marked":false}
-        }
+			"category":"Política",
+			"entries":{
+				"1":{"name":"Dilma","marked":false},
+				"2":{"name":"Temer","marked":false},
+				"3":{"name":"Cunha","marked":false},
+				"4":{"name":"Renan Calheiros","marked":false},
+				"5":{"name":"Trump","marked":false},
+				"6":{"name":"Bolsonaro","marked":false},
+				"7":{"name":"Pedro Paulo","marked":false},
+				"8":{"name":"Freixo","marked":false}
+			}
+		},
+		"3":{
+			"category":"Informatica",
+			"entries":{
+				"1":{"name":"Google","marked": false},
+				"2":{"name":"Facebook","marked":false}
+			}
 		}
+		
     }
 }

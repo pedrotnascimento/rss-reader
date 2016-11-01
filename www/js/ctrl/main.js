@@ -2,7 +2,7 @@
 
 angular.module('starter')
 .controller('Main', 
-    function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage){
+    function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage, $cordovaSocialSharing){
     var feed_received = false;
 
     $scope.feeds= [{
@@ -27,7 +27,8 @@ angular.module('starter')
     }
   
   var user_feeds =[
-      "http://g1.globo.com/dynamo/rss2.xml", "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
+      "http://g1.globo.com/dynamo/rss2.xml", 
+      "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
   ]; 
 
   function loadFeeds(){
@@ -79,7 +80,7 @@ angular.module('starter')
         function(event, toState, toParams, fromState, fromParams, options){
             if(toState.name=="app.feeds" &&
                 fromState.name=="app.tags")
-                for(var i =1; i < $scope.feeds.length-1; i++)
+                for(var i =1; i < $scope.feeds.length; i++)
                     filter($scope.feeds[i]);
     });
 
@@ -88,9 +89,9 @@ angular.module('starter')
         var tags_loaded = $tags.load();
         //console.log(tags_loaded);
         //console.log(feeds);
-        for(var j =0; j< feeds.entries.length; j++)
+        for(var j =0; j< feeds.entries.length; j++){
             evaluateNews(feeds.entries[j]);
-     
+        }
         function evaluateNews(news){
             var bagOfWords = news.categories + ",";
             var bagOfWords = bagOfWords + news.title.split(' ') + ",";
@@ -101,11 +102,20 @@ angular.module('starter')
             //FIX-ME: ou o código está duplicando noticias, ou noticias estao vindo duplicadas
             for(var i in tags_loaded){
                 for(var j in tags_loaded[i]) {
-                    if(bagOfWords.search(tags_loaded[i][j].name) != -1
-                        && ! (news in $scope.feeds[0].entries)){
-                        //console.log("achou " + tags_loaded[i][j].name);
-                        //console.log(bagOfWords);
-                        $scope.feeds[0].entries.push(news);      
+                    if(bagOfWords.search(j) != -1){
+
+                        if(!$scope.feeds[0].entries.length){
+                            $scope.feeds[0].entries.push(news);
+                            return true;
+                        }
+                        for(var k in $scope.feeds[0].entries){
+                            //console.log(k, $scope.feeds[0].entries[k].$$hashKey);
+                            if( $scope.feeds[0].entries[k].$$hashKey == news.$$hashKey){
+                                return true;
+                            }
+                        }
+                        $scope.feeds[0].entries.push(news);
+                        return true;      
                     }
                 }
             }
@@ -115,9 +125,21 @@ angular.module('starter')
     $scope.save = function(feed, index){
         var news = feed.entries[index];
         news.source = feed.title
-        var len = Object.keys($saved.saves).length;
-        $saved.saves[len] = news;
-        console.log(JSON.stringify($saved.saves));
+        $saved.save(news);
+        console.log(JSON.stringify(news));
+    }
+
+    $scope.shareWapp = function (news){
+    var message = news.contentSnippet;
+    console.log(news);
+    return ;
+     $cordovaSocialSharing.shareViaWhatsApp(message, image, link)
+            .then(function(result) {
+            console.log(result);
+            }, function(err) {
+            // An error occurred. Show a message to the user
+            console.log(err);
+            });
     }
 
 })
