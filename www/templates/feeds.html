@@ -6,7 +6,7 @@
                     {{feed.title}}
                 </div>
                 <div class="row card" ng-show="feed.show" ng-repeat="news in feed.entries">
-                    <div class="col col-90 " >
+                    <div class="col col-90 " ng-click="goNews(news)">
                         <div class="item item-stable item-text-wrap">
                             {{news.title}}
                         </div>

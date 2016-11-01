@@ -157,6 +157,10 @@ angular.module('starter')
         }
     }
 
+    $scope.goNews = function(news){
+        window.open(news.link, '_self')
+    }
+
 
 
 })
