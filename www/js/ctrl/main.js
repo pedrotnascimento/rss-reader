@@ -183,7 +183,8 @@ angular.module('starter')
             "https://news.google.com/news?output=rss&q=tecnologia&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=economia&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=saúde+e+bem+estar&ned=pt-BR_br",
-            "https://news.google.com/news?output=rss&q=games&ned=pt-BR_br"
+            "https://news.google.com/news?output=rss&q=games&ned=pt-BR_br",
+            "https://www.google.com.br/alerts/feeds/08393515450153141011/3152943385791131093"
             ];
         }
 
