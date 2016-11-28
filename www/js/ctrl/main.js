@@ -4,6 +4,7 @@ angular.module('starter')
 .controller('Main', 
     function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage, $cordovaSocialSharing,
                 $ionicPopup){
+    $scope.mode = true;
     var feed_received = false;
     function init_feeds(){
         $scope.feeds= [{
@@ -23,10 +24,16 @@ angular.module('starter')
     function Feed(feed) {
         var self = {};
         self = {};
-        self.title = feed.title;
+        var GoogleIdentifier = "Google Notícias";
+        self.title = feed.description != GoogleIdentifier? feed.title : preProcesTitle(feed.title);
         self.entries = feed.entries;
         self.show = false;
+        self.url = feed.feedUrl;  
         return self;
+        function preProcesTitle(title){
+            var title = title.split("- " + GoogleIdentifier)
+            return title[0];
+        }
     }
   var user_feeds =[
       "http://g1.globo.com/dynamo/rss2.xml", 
@@ -164,26 +171,45 @@ angular.module('starter')
     $scope.changeMode = function(){
         $scope.mode = ! $scope.mode;
         if($scope.mode)
-            user_feeds =[
+           user_feeds =[
+            "http://g1.globo.com/dynamo/rss2.xml", 
+            "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml",
+            "https://news.google.com/news?output=rss&q=belford+roxo&ned=pt-BR_br"
+            //"http://knowyourmeme.com/newsfeed.rss",  
+            ];
+        else
+         user_feeds =[
             "https://news.google.com/news?output=rss&q=politica&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=tecnologia&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=economia&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=saude+e+bem+estar&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=games&ned=pt-BR_br"
             ];
-        else
-            user_feeds =[
-            "http://g1.globo.com/dynamo/rss2.xml", 
-            "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml",
-            "https://news.google.com/news?output=rss&q=belford+roxo&ned=pt-BR_br"
-            //"http://knowyourmeme.com/newsfeed.rss",  
-            ]; 
+             
         init_feeds()
         loadFeeds();
     }
 
     $scope.goNews = function(news){
         window.open(news.link, '_self');
+    }
+
+    $scope.moreNews = function(feed){
+        FeedService.parseFeed(user_feeds[i]).then(function(res){
+        feed_received = true;
+        $scope.feeds.push(Feed(res.data.responseData.feed));
+        var feed_index = $scope.feeds.length-1;
+        filter($scope.feeds[feed_index]);   
+        },
+        function(res) {
+            // everything in here rejected
+            alert(JSON.stringify(res));
+        },
+        function(res) {
+            // everything in here pending (with progress back)
+            alert(JSON.stringify(res));
+        }  
+        );
     }
 
 })

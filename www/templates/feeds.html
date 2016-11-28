@@ -30,20 +30,25 @@
                 <div class="item item-divider" ng-click="changeDisplay($index)">
                     {{feed.title}}
                 </div>
-                <div class="row card" ng-show="feed.show" ng-repeat="news in feed.entries">
-                    <div class="col col-90 " ng-click="goNews(news)">
-                        <div class="item item-stable item-text-wrap">
-                            {{news.title}}
+                <span  ng-show="feed.show">
+                    <div class="row card" ng-repeat="news in feed.entries">
+                        <div class="col col-90 " ng-click="goNews(news)">
+                            <div class="item item-stable item-text-wrap">
+                                {{news.title}}
+                            </div>
+                            <div class="item  item-text-wrap">        
+                                    <small ng-bind-html="news.content"></small>  
+                            </div>
                         </div>
-                        <div class="item  item-text-wrap">        
-                                <small ng-bind-html="news.content"></small>  
+                        <div class="col">
+                            <button class="button button-small button-positive ion-thumbsup" ng-click="save(feed, $index)"></button>
+                            <button class="button button-small button-assertive ion-thumbsdown" ng-click="feed.entries.splice($index, 1)"></button>
                         </div>
                     </div>
-                    <div class="col">
-                        <button class="button button-small button-positive ion-thumbsup" ng-click="save(feed, $index)"></button>
-                        <button class="button button-small button-assertive ion-thumbsdown" ng-click="feed.entries.splice($index, 1)"></button>
+                    <div class="item" ng-click="moreNews()">
+                        Mais Notícias
                     </div>
-                </div>
+                </span>
             </div>
 
     </ion-content>
