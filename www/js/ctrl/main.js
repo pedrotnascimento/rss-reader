@@ -177,15 +177,16 @@ angular.module('starter')
             "https://news.google.com/news?output=rss&q=belford+roxo&ned=pt-BR_br"
             //"http://knowyourmeme.com/newsfeed.rss",  
             ];
-        else
+        else{
          user_feeds =[
-            "https://news.google.com/news?output=rss&q=politica&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=política&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=tecnologia&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=economia&ned=pt-BR_br",
-            "https://news.google.com/news?output=rss&q=saude+e+bem+estar&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=saúde+e+bem+estar&ned=pt-BR_br",
             "https://news.google.com/news?output=rss&q=games&ned=pt-BR_br"
             ];
-             
+        }
+
         init_feeds()
         loadFeeds();
     }
@@ -194,23 +195,6 @@ angular.module('starter')
         window.open(news.link, '_self');
     }
 
-    $scope.moreNews = function(feed){
-        FeedService.parseFeed(user_feeds[i]).then(function(res){
-        feed_received = true;
-        $scope.feeds.push(Feed(res.data.responseData.feed));
-        var feed_index = $scope.feeds.length-1;
-        filter($scope.feeds[feed_index]);   
-        },
-        function(res) {
-            // everything in here rejected
-            alert(JSON.stringify(res));
-        },
-        function(res) {
-            // everything in here pending (with progress back)
-            alert(JSON.stringify(res));
-        }  
-        );
-    }
 
 })
 .factory('FeedService',['$http',function($http){
