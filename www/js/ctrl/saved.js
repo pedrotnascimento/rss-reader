@@ -40,13 +40,8 @@ angular.module('starter')
         for(var i in $scope.saves){
             if($scope.saves[i] == news){
                 delete $scope.saves[i];
-                console.log("ASHDKF");
             }
         }
-        
-        console.log(JSON.stringify($scope.saves));
-
-        console.log("heyey");
     }
 
 });//fim controller

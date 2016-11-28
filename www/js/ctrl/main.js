@@ -5,12 +5,14 @@ angular.module('starter')
     function($scope, FeedService, $interval, $state, $tags, $rootScope, $saved, $localStorage, $cordovaSocialSharing,
                 $ionicPopup){
     var feed_received = false;
-
-    $scope.feeds= [{
-        title:"Interessantes",
-        entries:[],
-        show: false
-    }];
+    function init_feeds(){
+        $scope.feeds= [{
+            title:"Interessantes",
+            entries:[],
+            show: false
+        }];
+    }
+    init_feeds();
     url = "tes";
     $scope.test= "abc";
     
@@ -26,10 +28,12 @@ angular.module('starter')
         self.show = false;
         return self;
     }
-  
   var user_feeds =[
       "http://g1.globo.com/dynamo/rss2.xml", 
-      "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml"
+      "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml",
+      "https://news.google.com/news?output=rss&q=belford+roxo&ned=pt-BR_br"
+      //"http://knowyourmeme.com/newsfeed.rss",
+      
   ]; 
 
   function loadFeeds(){
@@ -157,8 +161,29 @@ angular.module('starter')
         }
     }
 
+    $scope.changeMode = function(){
+        $scope.mode = ! $scope.mode;
+        if($scope.mode)
+            user_feeds =[
+            "https://news.google.com/news?output=rss&q=politica&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=tecnologia&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=economia&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=saude+e+bem+estar&ned=pt-BR_br",
+            "https://news.google.com/news?output=rss&q=games&ned=pt-BR_br"
+            ];
+        else
+            user_feeds =[
+            "http://g1.globo.com/dynamo/rss2.xml", 
+            "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml",
+            "https://news.google.com/news?output=rss&q=belford+roxo&ned=pt-BR_br"
+            //"http://knowyourmeme.com/newsfeed.rss",  
+            ]; 
+        init_feeds()
+        loadFeeds();
+    }
+
     $scope.goNews = function(news){
-        window.open(news.link, '_self')
+        window.open(news.link, '_self');
     }
 
 })

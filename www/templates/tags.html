@@ -2,7 +2,16 @@
     <ion-content>
             <div ng-repeat="group  in interestsGroups" >
                 <div class="item item-divider" ng-click="changeDisplay($index)">
-                    {{group.category}}
+                    <div class="row">
+                        <div class="col col-10 ion-arrow-down-b"></div>
+                        <div class="col">   
+                            {{group.category}}
+                        </div>
+                         <div class="col col-10">          
+                            <ion-checkbox  ng-click="addGroup(group.entries, group.category)">
+                            </ion-checkbox> 
+                        </div>
+                    </div>
                 </div>
                 <div class="list" ng-show="group.show"  ng-repeat="interest in group.entries" ng-click="addInterest(interest, group.category)">
                     <ion-checkbox class="item list-item" ng-checked="interest.marked" ng-model="interest.marked">

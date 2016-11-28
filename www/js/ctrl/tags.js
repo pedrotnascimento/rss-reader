@@ -30,6 +30,14 @@ angular.module('starter')
    };
 
    $scope.addInterest = $tags.add;
+
+   $scope.addGroup = function(interests, group){
+    for(var i =0; i< interests.length; i++){
+        interests[i].marked = !interests[i].marked; 
+        $scope.addInterest(interests[i], group);
+    }
+
+   }
     
 });//fim controller
 })();//fim do arquivo 
