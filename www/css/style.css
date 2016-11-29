@@ -1,1 +1,10 @@
 /* Empty. Add your own CSS if you like */
+
+.blue {
+    color: #369;
+}
+
+.morePadding{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}

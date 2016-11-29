@@ -1,13 +1,13 @@
-<ion-view>
-    <ion-header-bar align-title="left" class="bar-subheader bar-royal">
-        <h1 class="title">Notícias VC</h1>
+<ion-view title="Notícias VC">
+    <ion-header-bar align-title="center" class="bar-subheader bar-positive">
+        <h1 class="title">{{mode?"Fontes":"Assuntos"}}</h1>
         <div class="buttons">
             <button ng-click="changeMode()" class="button ion-ios-arrow-right"></button>
         </div>
     </ion-header-bar>
-    <ion-content class="has-header has-subheader">
-            <div ng-repeat="feed in feeds" ng-show="mode" >
-                <div class="item item-divider" ng-click="changeDisplay($index)">
+    <ion-content class=" has-header has-subheader">
+            <div ng-repeat="feed in feeds" >
+                <div class="item-assertive blue  morePadding item item-divider" ng-click="changeDisplay($index)">
                     {{feed.title}}
                 </div>
                 <div class="row card" ng-show="feed.show" ng-repeat="news in feed.entries">
@@ -26,27 +26,6 @@
                 </div>
             </div>
             <!-- /////////////////////////////////////////////////////////////////// -->
-            <div ng-repeat="feed in feeds" ng-hide="mode" >
-                <div class="item item-divider" ng-click="changeDisplay($index)">
-                    {{feed.title}}
-                </div>
-                <span  ng-show="feed.show">
-                    <div class="row card" ng-repeat="news in feed.entries">
-                        <div class="col col-90 " ng-click="goNews(news)">
-                            <div class="item item-stable item-text-wrap">
-                                {{news.title}}
-                            </div>
-                            <div class="item  item-text-wrap">        
-                                    <small ng-bind-html="news.content"></small>  
-                            </div>
-                        </div>
-                        <div class="col">
-                            <button class="button button-small button-positive ion-thumbsup" ng-click="save(feed, $index)"></button>
-                            <button class="button button-small button-assertive ion-thumbsdown" ng-click="feed.entries.splice($index, 1)"></button>
-                        </div>
-                    </div>
-                </span>
-            </div>
-
+            
     </ion-content>
 </ion-view>
